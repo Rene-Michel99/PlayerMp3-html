@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="Style.css">
+	<script type="text/javascript">
+		function change_music(text,update_labels=true){
+			let audio = document.getElementById('player');
+			let player = document.getElementById("pl_source");
+
+			player.src = "Music/"+text;
+
+			if(update_labels){
+				actual = response.indexOf(text);
+				let label = document.getElementById('current_music');
+				let lb2 = document.getElementById('current_singer');
+
+				let arr = text.split(" - ");
+				label.innerHTML = arr[1].replace(".mp3","");
+				lb2.innerHTML = arr[0];
+			}
+
+			audio.load();
+			audio.play();
+		}
+		function next(){
+			actual++;
+			if(actual >= response.length)
+				actual = 0;
+			let text = response[actual];
+
+			change_music(text,false);
+
+			let label = document.getElementById('current_music');
+			let lb2 = document.getElementById('current_singer');
+
+			let arr = text.split(" - ");
+			label.innerHTML = arr[1].replace(".mp3","");
+			lb2.innerHTML = arr[0];
+		}
+		function previous(){
+			actual--;
+			if(actual < 0)
+				actual = 0;
+			let text = response[actual];
+
+			change_music(text,false);
+
+			let label = document.getElementById('current_music');
+			let lb2 = document.getElementById('current_singer');
+
+			let arr = text.split(" - ");
+			label.innerHTML = arr[1].replace(".mp3","");
+			lb2.innerHTML = arr[0];
+		}
+		function pause(){
+			let audio = document.getElementById('player');
+			let btn = document.getElementById('pause_btn');
+
+			if(!audio.paused){
+				btn.src = "play.png";
+				audio.pause();
+			}
+			else{
+				btn.src = "pause.png";
+				audio.play();
+			}
+		}
+		function update_time_music(value){
+			let audio = document.getElementById('player');
+
+			if(audio.paused)
+				audio.play();
+
+			audio.currentTime = audio.duration*(value/100);
+		}
+		function update_bar(){
+			let audio = document.getElementById('player');
+
+			let val = (audio.currentTime/audio.duration)*100;
+
+			let slider = document.getElementById('slider');
+			slider.value = val;
+
+			if(audio.currentTime >= audio.duration)
+				next();
+		}
+		var response = null;
+		var actual = 0;
+
+		let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                response = JSON.parse(this.responseText);
+
+                change_music(response[0]);
+
+                let father = document.getElementById("father-ol");
+                let html = "";
+                for(let i=0; i<response.length; i++){
+                	let arr = response[i].split(" - ");
+                	let cantor = "<p>"+arr[0]+"</p>";
+					let musica = "<strong>"+arr[1].replace(".mp3","")+"</strong>";
+
+                	html += '<div class="container"><button class="music-btn shadow" onclick="change_music'+"('"+response[i]+"')"+'"><p class="label-text">'+musica+cantor+"</p></button></div>";
+                }
+                father.innerHTML = html;
+            }
+        };
+        xmlhttp.open("GET", "Get_files.php", true);
+        xmlhttp.send();
+	</script>
+</head>
+
+<body class="color-dark">
+	<div class="row">
+		<div class="column left controls">
+			<div class="img-holder">
+				<div class="labels-content">
+					<p id="current_music" class="label-music"></p>
+					<p id="current_singer" class="label-singer"></p>
+				</div>
+				<img src="jake.gif" width="98%" height="479px">
+				<div class="img-content">
+					<button class="ctrl-btn" onclick="previous()"><img src="previous.png" width="50" height="50"></button>
+					<button class="ctrl-btn" onclick="pause()"><img id="pause_btn"src="play.png" width="50" height="50"></button>
+					<button class="ctrl-btn" onclick="next()"><img src="next.png" width="50" height="50"></button>
+				</div>
+			</div>
+			<input type="range" step="0.1" min="0" max="100" value="0" class="slider" id="slider" onchange="update_time_music(this.value)">
+		</div>
+		<div class="column right main">
+			<div id="father-ol">
+					
+			</div>
+		</div>
+	</div>
+
+</body>
+<foot class="footer">
+	<br>
+	<audio id="player" controls="controls" hidden="true" ontimeupdate="update_bar()">
+		<source id="pl_source" src="Music/Usher - Dj Got Us Fallin In Love.mp3" type="audio/mpeg">
+	</audio>
+	<div class="container">Icones feitos por <a href="https://www.flaticon.com/br/autores/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/br/" title="Flaticon">www.flaticon.com</a>
+	</div>
+</foot>
+</html>

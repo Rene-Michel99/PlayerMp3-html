@@ -73,6 +73,9 @@
 
 			let slider = document.getElementById('slider');
 			slider.value = val;
+
+			if(audio.currentTime >= audio.duration)
+				next();
 		}
 		var response = null;
 		var actual = 0;

@@ -29,15 +29,20 @@
 }
 .music-btn{
 	text-align:left;
-	background-image: linear-gradient(#E6005E, #B30049);
+	background-color:none;
     width:100%;
     height:100%;
     display:block;
-    margin:2px;
-    border-top:2px solid #000133;
+    margin:8px;
+    border-top:0px;
     border-left:0px;
     border-right:0px;
     border-bottom:0px;
+}
+.music-btn:hover,.music-btn:focus{
+	background-image: linear-gradient(#B30049,#E6005E);
+	box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  	transform: translateY(-0.25em);
 }
 .labels-content{
 	opacity:0.3;

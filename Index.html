@@ -102,7 +102,7 @@
                 	let cantor = "<p>"+arr[0]+"</p>";
 					let musica = "<strong>"+arr[1].replace(".mp3","")+"</strong>";
 
-                	html += '<div class="container"><button class="music-btn shadow" onclick="change_music'+"('"+response[i]+"')"+'"><p class="label-text">'+musica+cantor+"</p></button></div>";
+                	html += '<div class="container"><button class="music-btn" onclick="change_music'+"('"+response[i]+"')"+'"><p class="label-text">'+musica+cantor+"</p></button></div>";
                 }
                 father.innerHTML = html;
             }

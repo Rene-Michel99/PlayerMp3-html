@@ -55,10 +55,16 @@
 		}
 		function pause(){
 			let audio = document.getElementById('player');
-			if(!audio.paused)
+			let btn = document.getElementById('pause_btn');
+
+			if(!audio.paused){
+				btn.src = "play.png";
 				audio.pause();
-			else
+			}
+			else{
+				btn.src = "pause.png";
 				audio.play();
+			}
 		}
 		function update_time_music(value){
 			let audio = document.getElementById('player');
@@ -117,7 +123,7 @@
 				<img src="jake.gif" width="98%" height="479px">
 				<div class="img-content">
 					<button class="ctrl-btn" onclick="previous()"><img src="previous.png" width="50" height="50"></button>
-					<button class="ctrl-btn" onclick="pause()"><img src="play.png" width="50" height="50"></button>
+					<button class="ctrl-btn" onclick="pause()"><img id="pause_btn"src="play.png" width="50" height="50"></button>
 					<button class="ctrl-btn" onclick="next()"><img src="next.png" width="50" height="50"></button>
 				</div>
 			</div>
@@ -132,6 +138,7 @@
 
 </body>
 <foot class="footer">
+	<br>
 	<audio id="player" controls="controls" hidden="true" ontimeupdate="update_bar()">
 		<source id="pl_source" src="Music/Usher - Dj Got Us Fallin In Love.mp3" type="audio/mpeg">
 	</audio>

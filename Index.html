@@ -25,6 +25,8 @@
 		}
 		function next(){
 			actual++;
+			if(actual >= response.length)
+				actual = 0;
 			let text = response[actual];
 
 			change_music(text,false);
@@ -104,7 +106,7 @@
 	</script>
 </head>
 
-<body class="color-dark-blue">
+<body class="color-dark">
 	<div class="row">
 		<div class="column left controls">
 			<div class="img-holder">
